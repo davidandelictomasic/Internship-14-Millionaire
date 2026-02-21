@@ -1,0 +1,9 @@
+.answer-btn--correct {
+  background-color: green;
+  color: white;
+}
+
+.answer-btn--wrong {
+  background-color: red;
+  color: white;
+}

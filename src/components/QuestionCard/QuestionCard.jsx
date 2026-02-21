@@ -1,3 +1,6 @@
+import clsx from 'clsx';
+import './QuestionCard.css';
+
 const LABELS = ['A', 'B', 'C', 'D'];
 
 function QuestionCard({
@@ -24,6 +27,10 @@ function QuestionCard({
         {answers.map((answer, i) => (
           <button
             key={i}
+            className={clsx('answer-btn', {
+              'answer-btn--correct': showingResult && i === correctAnswer,
+              'answer-btn--wrong': showingResult && i === selectedAnswer && i !== correctAnswer,
+            })}
             onClick={() => handleClick(i)}
             disabled={showingResult}
           >
