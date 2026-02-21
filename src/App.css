@@ -1,6 +1,20 @@
 .game-container {
   width: 100%;
-  max-width: 800px;
+  max-width: 900px;
   margin: 0 auto;
   padding: 2rem;
+}
+
+.game-layout {
+  display: flex;
+  gap: 2rem;
+}
+
+.game-layout > :first-child {
+  flex: 1;
+}
+
+.game-layout > :last-child {
+  width: 200px;
+  flex-shrink: 0;
 }

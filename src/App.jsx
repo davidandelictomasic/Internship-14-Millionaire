@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { easyQuestions, hardQuestions, REWARDS, SAFE_LEVEL } from './data/questions';
 import StartScreen from './components/StartScreen/StartScreen';
 import QuestionCard from './components/QuestionCard/QuestionCard';
+import LevelSidebar from './components/LevelSidebar/LevelSidebar';
 import './App.css';
 
 function shuffleArray(array) {
@@ -82,16 +83,19 @@ function App() {
       )}
 
       {gamePhase === 'playing' && questions.length > 0 && (
-        <QuestionCard
-          question={questions[currentLevel].question}
-          answers={questions[currentLevel].answers}
-          selectedAnswer={selectedAnswer}
-          correctAnswer={questions[currentLevel].correct}
-          showingResult={showingResult}
-          onSelectAnswer={handleSelectAnswer}
-          currentLevel={currentLevel}
-          reward={formatReward(REWARDS[currentLevel])}
-        />
+        <div className="game-layout">
+          <QuestionCard
+            question={questions[currentLevel].question}
+            answers={questions[currentLevel].answers}
+            selectedAnswer={selectedAnswer}
+            correctAnswer={questions[currentLevel].correct}
+            showingResult={showingResult}
+            onSelectAnswer={handleSelectAnswer}
+            currentLevel={currentLevel}
+            reward={formatReward(REWARDS[currentLevel])}
+          />
+          <LevelSidebar currentLevel={currentLevel} />
+        </div>
       )}
 
       {(gamePhase === 'gameOver' || gamePhase === 'win') && (
