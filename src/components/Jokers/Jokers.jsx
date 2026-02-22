@@ -1,7 +1,7 @@
 import clsx from 'clsx';
 import './Jokers.css';
 
-function Jokers({ jokers, onFiftyFifty, onSkip, onQuit, disabled }) {
+function Jokers({ jokers, onFiftyFifty, onSkip, onSwap, onQuit, disabled }) {
   return (
     <div className="jokers">
       <button
@@ -17,6 +17,13 @@ function Jokers({ jokers, onFiftyFifty, onSkip, onQuit, disabled }) {
         disabled={!jokers.skip || disabled}
       >
         Preskoči
+      </button>
+      <button
+        className={clsx('joker-btn', { 'joker-btn--used': !jokers.swap })}
+        onClick={onSwap}
+        disabled={!jokers.swap || disabled}
+      >
+        Zamijeni
       </button>
       <button
         className="joker-btn joker-btn--quit"

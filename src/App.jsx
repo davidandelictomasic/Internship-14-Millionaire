@@ -42,7 +42,7 @@ function App() {
   const [selectedAnswer, setSelectedAnswer] = useState(null);
   const [showingResult, setShowingResult] = useState(false);
   const [earnings, setEarnings] = useState(0);
-  const [jokers, setJokers] = useState({ fiftyFifty: true, skip: true });
+  const [jokers, setJokers] = useState({ fiftyFifty: true, skip: true, swap: true });
   const [hiddenAnswers, setHiddenAnswers] = useState([]);
 
   function handleStartGame() {
@@ -51,7 +51,7 @@ function App() {
     setSelectedAnswer(null);
     setShowingResult(false);
     setEarnings(0);
-    setJokers({ fiftyFifty: true, skip: true });
+    setJokers({ fiftyFifty: true, skip: true, swap: true });
     setHiddenAnswers([]);
     setGamePhase('playing');
   }
@@ -79,6 +79,25 @@ function App() {
       setSelectedAnswer(null);
     }
     setJokers((prev) => ({ ...prev, skip: false }));
+  }
+
+  function handleSwap() {
+    if (!jokers.swap || showingResult) return;
+
+    const pool = currentLevel < 5 ? easyQuestions : hardQuestions;
+    const usedTexts = questions.map((q) => q.question);
+    const available = pool.filter((q) => !usedTexts.includes(q.question));
+
+    if (available.length === 0) return;
+
+    const newQuestion = shuffleQuestion(available[Math.floor(Math.random() * available.length)]);
+    const updated = [...questions];
+    updated[currentLevel] = newQuestion;
+
+    setQuestions(updated);
+    setHiddenAnswers([]);
+    setSelectedAnswer(null);
+    setJokers((prev) => ({ ...prev, swap: false }));
   }
 
   function handleQuit() {
@@ -129,6 +148,7 @@ function App() {
               jokers={jokers}
               onFiftyFifty={handleFiftyFifty}
               onSkip={handleSkip}
+              onSwap={handleSwap}
               onQuit={handleQuit}
               disabled={showingResult}
             />
