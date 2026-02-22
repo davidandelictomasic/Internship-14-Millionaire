@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { easyQuestions, hardQuestions, REWARDS, SAFE_LEVEL } from './data/questions';
 import StartScreen from './components/StartScreen/StartScreen';
 import QuestionCard from './components/QuestionCard/QuestionCard';
@@ -35,15 +35,35 @@ function formatReward(amount) {
   return amount.toLocaleString('hr-HR') + ' €';
 }
 
+function loadSavedGame() {
+  try {
+    const saved = localStorage.getItem('milijunas-save');
+    if (saved) return JSON.parse(saved);
+  } catch (e) { }
+  return null;
+}
+
+const saved = loadSavedGame();
+
 function App() {
-  const [gamePhase, setGamePhase] = useState('start');
-  const [questions, setQuestions] = useState([]);
-  const [currentLevel, setCurrentLevel] = useState(0);
+  const [gamePhase, setGamePhase] = useState(saved ? saved.gamePhase : 'start');
+  const [questions, setQuestions] = useState(saved ? saved.questions : []);
+  const [currentLevel, setCurrentLevel] = useState(saved ? saved.currentLevel : 0);
   const [selectedAnswer, setSelectedAnswer] = useState(null);
   const [showingResult, setShowingResult] = useState(false);
-  const [earnings, setEarnings] = useState(0);
-  const [jokers, setJokers] = useState({ fiftyFifty: true, skip: true, swap: true });
-  const [hiddenAnswers, setHiddenAnswers] = useState([]);
+  const [earnings, setEarnings] = useState(saved ? saved.earnings : 0);
+  const [jokers, setJokers] = useState(saved ? saved.jokers : { fiftyFifty: true, skip: true, swap: true });
+  const [hiddenAnswers, setHiddenAnswers] = useState(saved ? saved.hiddenAnswers : []);
+
+  useEffect(() => {
+    if (gamePhase === 'playing') {
+      localStorage.setItem('milijunas-save', JSON.stringify({
+        gamePhase, questions, currentLevel, earnings, jokers, hiddenAnswers,
+      }));
+    } else {
+      localStorage.removeItem('milijunas-save');
+    }
+  }, [gamePhase, questions, currentLevel, earnings, jokers, hiddenAnswers]);
 
   function handleStartGame() {
     setQuestions(buildQuestionSet());
