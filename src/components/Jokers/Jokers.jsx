@@ -1,7 +1,7 @@
 import clsx from 'clsx';
 import './Jokers.css';
 
-function Jokers({ jokers, onFiftyFifty, onSkip, disabled }) {
+function Jokers({ jokers, onFiftyFifty, onSkip, onQuit, disabled }) {
   return (
     <div className="jokers">
       <button
@@ -17,6 +17,13 @@ function Jokers({ jokers, onFiftyFifty, onSkip, disabled }) {
         disabled={!jokers.skip || disabled}
       >
         Preskoči
+      </button>
+      <button
+        className="joker-btn joker-btn--quit"
+        onClick={onQuit}
+        disabled={disabled}
+      >
+        Odustani
       </button>
     </div>
   );

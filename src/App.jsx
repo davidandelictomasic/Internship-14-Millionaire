@@ -81,6 +81,15 @@ function App() {
     setJokers((prev) => ({ ...prev, skip: false }));
   }
 
+  function handleQuit() {
+    if (showingResult) return;
+    const quitEarnings = currentLevel === 0 ? 0 : REWARDS[currentLevel - 1];
+    if (window.confirm('Jeste li sigurni da želite odustati? Osvojili biste: ' + formatReward(quitEarnings))) {
+      setEarnings(quitEarnings);
+      setGamePhase('gameOver');
+    }
+  }
+
   function handleSelectAnswer(index) {
     if (showingResult) return;
 
@@ -120,6 +129,7 @@ function App() {
               jokers={jokers}
               onFiftyFifty={handleFiftyFifty}
               onSkip={handleSkip}
+              onQuit={handleQuit}
               disabled={showingResult}
             />
             <QuestionCard
