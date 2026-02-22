@@ -3,6 +3,7 @@ import { easyQuestions, hardQuestions, REWARDS, SAFE_LEVEL } from './data/questi
 import StartScreen from './components/StartScreen/StartScreen';
 import QuestionCard from './components/QuestionCard/QuestionCard';
 import LevelSidebar from './components/LevelSidebar/LevelSidebar';
+import Jokers from './components/Jokers/Jokers';
 import './App.css';
 
 function shuffleArray(array) {
@@ -41,6 +42,8 @@ function App() {
   const [selectedAnswer, setSelectedAnswer] = useState(null);
   const [showingResult, setShowingResult] = useState(false);
   const [earnings, setEarnings] = useState(0);
+  const [jokers, setJokers] = useState({ fiftyFifty: true, skip: true });
+  const [hiddenAnswers, setHiddenAnswers] = useState([]);
 
   function handleStartGame() {
     setQuestions(buildQuestionSet());
@@ -48,7 +51,34 @@ function App() {
     setSelectedAnswer(null);
     setShowingResult(false);
     setEarnings(0);
+    setJokers({ fiftyFifty: true, skip: true });
+    setHiddenAnswers([]);
     setGamePhase('playing');
+  }
+
+  function handleFiftyFifty() {
+    if (!jokers.fiftyFifty || showingResult) return;
+
+    const correct = questions[currentLevel].correct;
+    const wrongIndices = [0, 1, 2, 3].filter((i) => i !== correct);
+    const shuffledWrong = shuffleArray(wrongIndices);
+
+    setHiddenAnswers([shuffledWrong[0], shuffledWrong[1]]);
+    setJokers((prev) => ({ ...prev, fiftyFifty: false }));
+  }
+
+  function handleSkip() {
+    if (!jokers.skip || showingResult) return;
+
+    if (currentLevel === 9) {
+      setEarnings(REWARDS[9]);
+      setGamePhase('win');
+    } else {
+      setCurrentLevel((prev) => prev + 1);
+      setHiddenAnswers([]);
+      setSelectedAnswer(null);
+    }
+    setJokers((prev) => ({ ...prev, skip: false }));
   }
 
   function handleSelectAnswer(index) {
@@ -68,6 +98,7 @@ function App() {
           setCurrentLevel((prev) => prev + 1);
           setSelectedAnswer(null);
           setShowingResult(false);
+          setHiddenAnswers([]);
         }
       } else {
         setEarnings(currentLevel > SAFE_LEVEL ? REWARDS[SAFE_LEVEL] : 0);
@@ -84,16 +115,25 @@ function App() {
 
       {gamePhase === 'playing' && questions.length > 0 && (
         <div className="game-layout">
-          <QuestionCard
-            question={questions[currentLevel].question}
-            answers={questions[currentLevel].answers}
-            selectedAnswer={selectedAnswer}
-            correctAnswer={questions[currentLevel].correct}
-            showingResult={showingResult}
-            onSelectAnswer={handleSelectAnswer}
-            currentLevel={currentLevel}
-            reward={formatReward(REWARDS[currentLevel])}
-          />
+          <div>
+            <Jokers
+              jokers={jokers}
+              onFiftyFifty={handleFiftyFifty}
+              onSkip={handleSkip}
+              disabled={showingResult}
+            />
+            <QuestionCard
+              question={questions[currentLevel].question}
+              answers={questions[currentLevel].answers}
+              selectedAnswer={selectedAnswer}
+              correctAnswer={questions[currentLevel].correct}
+              showingResult={showingResult}
+              onSelectAnswer={handleSelectAnswer}
+              currentLevel={currentLevel}
+              reward={formatReward(REWARDS[currentLevel])}
+              hiddenAnswers={hiddenAnswers}
+            />
+          </div>
           <LevelSidebar currentLevel={currentLevel} />
         </div>
       )}

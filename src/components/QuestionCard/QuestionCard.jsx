@@ -12,6 +12,7 @@ function QuestionCard({
   onSelectAnswer,
   currentLevel,
   reward,
+  hiddenAnswers = [],
 }) {
   function handleClick(index) {
     if (!showingResult) {
@@ -30,9 +31,10 @@ function QuestionCard({
             className={clsx('answer-btn', {
               'answer-btn--correct': showingResult && i === correctAnswer,
               'answer-btn--wrong': showingResult && i === selectedAnswer && i !== correctAnswer,
+              'answer-btn--hidden': hiddenAnswers.includes(i),
             })}
             onClick={() => handleClick(i)}
-            disabled={showingResult}
+            disabled={showingResult || hiddenAnswers.includes(i)}
           >
             {LABELS[i]}: {answer}
           </button>

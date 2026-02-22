@@ -7,3 +7,7 @@
   background-color: red;
   color: white;
 }
+
+.answer-btn--hidden {
+  visibility: hidden;
+}

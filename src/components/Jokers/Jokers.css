@@ -1,0 +1,26 @@
+.jokers {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 1rem;
+}
+
+.joker-btn {
+  padding: 8px 16px;
+  border: 1px solid #888;
+  background: transparent;
+  color: white;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.joker-btn:hover:not(:disabled) {
+  border-color: orange;
+  color: orange;
+}
+
+.joker-btn--used {
+  text-decoration: line-through;
+  opacity: 0.4;
+  cursor: default;
+}
