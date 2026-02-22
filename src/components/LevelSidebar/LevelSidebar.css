@@ -1,29 +1,29 @@
 .level-sidebar {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 2px;
 }
 
 .level-item {
   display: flex;
   justify-content: space-between;
-  padding: 6px 12px;
-  border-radius: 4px;
-  font-size: 0.9rem;
-  color: #888;
+  padding: 7px 12px;
+  border-radius: var(--border-radius);
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
 }
 
 .level-item--completed {
-  color: #555;
+  color: #444466;
 }
 
 .level-item--safe {
-  color: orange;
-  font-weight: 600;
+  color: var(--color-accent);
+  font-weight: 700;
 }
 
 .level-item--active {
-  background-color: #1a1f4e;
-  color: white;
+  background: var(--color-surface);
+  color: var(--color-text);
   font-weight: 700;
 }

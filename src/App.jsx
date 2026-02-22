@@ -139,10 +139,15 @@ function App() {
       )}
 
       {(gamePhase === 'gameOver' || gamePhase === 'win') && (
-        <div>
-          <h1>{gamePhase === 'win' ? 'Čestitamo!' : 'Igra je završena!'}</h1>
-          <p>Osvojili ste: {formatReward(earnings)}</p>
-          <button onClick={() => setGamePhase('start')}>Igraj ponovo</button>
+        <div className="game-over">
+          <h1 className={'game-over__title ' + (gamePhase === 'win' ? 'game-over__title--win' : 'game-over__title--lose')}>
+            {gamePhase === 'win' ? 'Čestitamo!' : 'Igra je završena!'}
+          </h1>
+          <div className="game-over__earnings">
+            {gamePhase === 'win' ? 'Osvojili ste glavnu nagradu!' : 'Osvojili ste:'}
+            <span className="game-over__amount">{formatReward(earnings)}</span>
+          </div>
+          <button className="game-over__btn" onClick={() => setGamePhase('start')}>Igraj ponovo</button>
         </div>
       )}
     </div>

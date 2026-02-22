@@ -21,10 +21,13 @@ function QuestionCard({
   }
 
   return (
-    <div>
-      <p>Pitanje {currentLevel + 1} — {reward}</p>
-      <h2>{question}</h2>
-      <div>
+    <div className="question-card">
+      <div className="question-card__level">
+        <div className="question-card__level-number">Pitanje {currentLevel + 1}</div>
+        <div className="question-card__reward">{reward}</div>
+      </div>
+      <div className="question-card__text">{question}</div>
+      <div className="answers-grid">
         {answers.map((answer, i) => (
           <button
             key={i}
@@ -36,7 +39,8 @@ function QuestionCard({
             onClick={() => handleClick(i)}
             disabled={showingResult || hiddenAnswers.includes(i)}
           >
-            {LABELS[i]}: {answer}
+            <span className="answer-btn__label">{LABELS[i]}:</span>
+            {answer}
           </button>
         ))}
       </div>

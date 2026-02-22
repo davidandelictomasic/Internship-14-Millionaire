@@ -1,3 +1,17 @@
+:root {
+  --color-bg: #0a0e27;
+  --color-surface: #1a1f4e;
+  --color-text: #ffffff;
+  --color-text-muted: #8888aa;
+  --color-accent: #f5a623;
+  --color-correct: #2ecc71;
+  --color-wrong: #e74c3c;
+  --color-answer-bg: #2a2f6e;
+  --color-answer-hover: #3a3f8e;
+  --color-answer-border: #4a4fae;
+  --border-radius: 8px;
+}
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -5,9 +19,9 @@
 }
 
 body {
-  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-  background-color: #0a0e27;
-  color: #ffffff;
+  font-family: 'Segoe UI', system-ui, sans-serif;
+  background-color: var(--color-bg);
+  color: var(--color-text);
   line-height: 1.5;
 }
 

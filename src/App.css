@@ -1,6 +1,6 @@
 .game-container {
   width: 100%;
-  max-width: 900px;
+  max-width: 1000px;
   margin: 0 auto;
   padding: 2rem;
 }
@@ -17,4 +17,49 @@
 .game-layout > :last-child {
   width: 200px;
   flex-shrink: 0;
+}
+
+.game-over {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.game-over__title {
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.game-over__title--win {
+  color: var(--color-accent);
+}
+
+.game-over__earnings {
+  font-size: 1.2rem;
+  color: var(--color-text-muted);
+}
+
+.game-over__amount {
+  display: block;
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: var(--color-accent);
+  margin-top: 0.5rem;
+}
+
+.game-over__btn {
+  background-color: var(--color-accent);
+  color: #000;
+  border: none;
+  padding: 0.8rem 2.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+}
+
+.game-over__btn:hover {
+  opacity: 0.85;
 }

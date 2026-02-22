@@ -5,3 +5,29 @@
   align-items: center;
   gap: 2rem;
 }
+
+.start-screen__title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--color-accent);
+}
+
+.start-screen__subtitle {
+  color: var(--color-text-muted);
+  font-size: 1.1rem;
+}
+
+.start-screen__btn {
+  background-color: var(--color-accent);
+  color: #000;
+  border: none;
+  padding: 0.8rem 2.5rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+}
+
+.start-screen__btn:hover {
+  opacity: 0.85;
+}
